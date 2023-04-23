@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sem_2/constants/routes.dart';
+import 'package:flutter_sem_2/utilities/show_error_dialog.dart';
 import 'dart:developer' show log;
 
 import '../firebase_options.dart';
@@ -67,11 +68,11 @@ class _RegisterViewState extends State<RegisterView> {
                 log(userCredential.toString());
               } on FirebaseAuthException catch (e) {
                 if (e.code == 'weak-password') {
-                  log('weak password');
+                  await showErrorDialog(context, 'weak password');
                 } else if (e.code == 'email-already-in-use') {
-                  log('email already in use');
+                  await showErrorDialog(context, 'e-mail already in use');
                 } else if (e.code == 'invalid-email') {
-                  log('email invalid');
+                  await showErrorDialog(context, 'invalid email');
                 }
               }
             },
