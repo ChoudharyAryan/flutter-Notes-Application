@@ -3,7 +3,7 @@ import 'package:flutter_sem_2/services/auth/auth_provider.dart';
 import 'package:flutter_sem_2/services/auth/auth_user.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-void manin() {
+void main() {
   group(
     'Mock Authentication',
     () {
