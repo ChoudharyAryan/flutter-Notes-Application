@@ -1,2 +1,2 @@
-# flutter-sem-2
-flutter sem 2 my first flutter aplication
+# flutter-Notes-Application
+flutter Notes Application is  my first flutter aplication
