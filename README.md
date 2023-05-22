@@ -1,4 +1,4 @@
-# flutter_sem_2
+# flutter_Notes_Application
 
 A new Flutter project.
 
