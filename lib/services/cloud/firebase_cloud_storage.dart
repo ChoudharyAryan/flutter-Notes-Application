@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_sem_2/services/cloud/cloud_note.dart';
 import 'package:flutter_sem_2/services/cloud/cloud_storage_constants.dart';
@@ -8,9 +7,9 @@ class FirebaseCloudStorage {
   final notes = FirebaseFirestore.instance.collection('notes');
 
   Future<void> deleteNote({required String documentId}) async {
-    try{
+    try {
       await notes.doc(documentId).delete();
-    } catch (e){
+    } catch (e) {
       throw CouldNotDeleteNoteException();
     }
   }
@@ -41,7 +40,7 @@ class FirebaseCloudStorage {
           .get()
           .then(
             (value) => value.docs.map(
-              (doc) =>CloudNote.fromSnapshot(doc),
+              (doc) => CloudNote.fromSnapshot(doc),
             ),
           );
     } catch (e) {
@@ -57,9 +56,9 @@ class FirebaseCloudStorage {
     final fetchedNote = await document.get();
     return CloudNote(
       documentId: fetchedNote.id,
-     ownerUserId: ownerUserId,
+      ownerUserId: ownerUserId,
       text: '',
-      );
+    );
   }
 
   static final FirebaseCloudStorage _shared =
