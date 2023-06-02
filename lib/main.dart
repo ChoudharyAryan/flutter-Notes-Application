@@ -3,6 +3,7 @@ import 'package:flutter_sem_2/constants/routes.dart';
 import 'package:flutter_sem_2/helpers/loading/loading_screen.dart';
 import 'package:flutter_sem_2/services/auth/bloc/auth_bloc.dart';
 import 'package:flutter_sem_2/services/auth/firebase_auth_provider.dart';
+import 'package:flutter_sem_2/views/forgot_password_view.dart';
 import 'package:flutter_sem_2/views/login_view.dart';
 import 'package:flutter_sem_2/views/notes/create_update_note_view.dart';
 import 'package:flutter_sem_2/views/notes/notes_view.dart';
@@ -54,7 +55,9 @@ class HomePage extends StatelessWidget {
         return const VerifyEmailView();
       } else if (state is AuthStateLoggedOut) {
         return const LoginView();
-      } else if (state is AuthStateRegistering) {
+      } else if (state is AuthStateForgotPassword){
+        return const ForgotPasswordView();
+      }else if (state is AuthStateRegistering) {
         return const RegisterView();
       } else {
         return const Scaffold(
