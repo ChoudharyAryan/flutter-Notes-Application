@@ -4,6 +4,8 @@ import 'package:flutter_sem_2/utilities/dialogs/cannot_share_empty_note_dialog.d
 import 'package:flutter_sem_2/utilities/generics/get_arguments.dart';
 import 'package:flutter_sem_2/services/cloud/cloud_note.dart';
 import 'package:flutter_sem_2/services/cloud/firebase_cloud_storage.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:share_plus/share_plus.dart';
 
 class CreateUpdateNoteView extends StatefulWidget {
@@ -88,8 +90,13 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Scaffold(      
       appBar: AppBar(
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(18),
+                bottomRight: Radius.circular(18))),
+        centerTitle: true,        
         title: const Text('New Note'),
         actions: [
           IconButton(onPressed: () async {
@@ -100,7 +107,7 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
               Share.share(text);
             }
           },
-          icon: const Icon(Icons.share_rounded),
+          icon: const FaIcon(FontAwesomeIcons.share),
           ),
         ],
       ),
@@ -109,16 +116,22 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.done:
-                return TextField(
-                  controller: _textController,
-                  keyboardType: TextInputType.multiline,
-                  maxLines: null,
-                  decoration: const InputDecoration(
-                    hintText: 'Begin With Your Notes ->',
+                return Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: TextField(
+                    controller: _textController,
+                    keyboardType: TextInputType.multiline,
+                    maxLines: null,
+                    decoration: const InputDecoration(
+                      hintText: 'Begin With Your Notes ->',
+                    ),
                   ),
                 );
               default:
-                return const CircularProgressIndicator();
+                return const  SpinKitCircle(
+                      color: Colors.blue,
+                      size: 50.0,
+                    );
             }
           }),
     );

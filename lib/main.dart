@@ -10,6 +10,7 @@ import 'package:flutter_sem_2/views/notes/notes_view.dart';
 import 'package:flutter_sem_2/views/register_view.dart';
 import 'package:flutter_sem_2/views/verify_email_view.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -61,7 +62,10 @@ class HomePage extends StatelessWidget {
         return const RegisterView();
       } else {
         return const Scaffold(
-          body: Center(child: CircularProgressIndicator()),
+          body: Center(child:  SpinKitCircle(
+                      color: Colors.blue,
+                      size: 50.0,
+                    ),),
         );
       }
     });

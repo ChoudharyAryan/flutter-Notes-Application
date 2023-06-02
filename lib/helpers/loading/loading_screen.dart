@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_sem_2/helpers/loading/loading_screen_controllers.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class LoadingScreen {
   factory LoadingScreen() => _shared;
@@ -66,7 +67,10 @@ class LoadingScreen {
                     const SizedBox(
                       height: 10,
                     ),
-                    const CircularProgressIndicator(),
+                    const SpinKitCircle(
+                      color: Colors.blue,
+                      size: 50.0,
+                    ),
                     const SizedBox(
                       height: 20,
                     ),

@@ -6,6 +6,7 @@ import 'package:flutter_sem_2/services/auth/auth_exception.dart';
 import 'package:flutter_sem_2/services/auth/bloc/auth_bloc.dart';
 import 'package:flutter_sem_2/utilities/dialogs/error_dialog.dart';
 import 'package:flutter_sem_2/utilities/dialogs/loading_dialog.dart';
+import 'package:lottie/lottie.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -14,14 +15,17 @@ class LoginView extends StatefulWidget {
   State<LoginView> createState() => _LoginViewState();
 }
 
-class _LoginViewState extends State<LoginView> {
+class _LoginViewState extends State<LoginView> with TickerProviderStateMixin {
   late final TextEditingController _email;
   late final TextEditingController _password;
+
+  
 
   @override
   void initState() {
     _email = TextEditingController();
     _password = TextEditingController();
+    
     super.initState();
   }
 
@@ -31,6 +35,8 @@ class _LoginViewState extends State<LoginView> {
     _password.dispose();
     super.dispose();
   }
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -51,58 +57,78 @@ class _LoginViewState extends State<LoginView> {
       },
       child: Scaffold(
         appBar: AppBar(
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(18),
+                bottomRight: Radius.circular(18))),
+        centerTitle: true,
           title: const Text('Login'),
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              const Text('Log in to your account to interact with and create notes!',
-              style: TextStyle(fontSize: 18),
-              ),
-              const SizedBox(height: 20,),
-              TextField(
-                controller: _email,
-                enableSuggestions: false,
-                autocorrect: false,
-                keyboardType: TextInputType.emailAddress,
-                decoration: const InputDecoration(
-                  hintText: 'Enter your e-mail ',
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.blue,
+                    borderRadius: BorderRadius.circular(10)
+                  ),
+                  child: const Text('Log in to your account to interact with and create notes!',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold,color: Colors.white),
+                  ),
                 ),
-              ),
-              TextField(
-                controller: _password,
-                obscureText: true,
-                obscuringCharacter: '-',
-                enableSuggestions: false,
-                autocorrect: false,
-                keyboardType: TextInputType.emailAddress,
-                decoration: const InputDecoration(
-                  hintText: 'enter your password',
+                const SizedBox(height: 20,),
+                TextField(
+                  controller: _email,
+                  enableSuggestions: false,
+                  autocorrect: false,
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: const InputDecoration(
+                    hintText: 'Enter your e-mail ',
+                  ),
                 ),
-              ),
-              CupertinoButton(
-                onPressed: () async {
-                  final email = _email.text;
-                  final password = _password.text;
-                  context.read<AuthBloc>().add(
-                        AuthEventLogIn(
-                          email,
-                          password,
-                        ),
-                      );
-                },
-                child: const Text('Login'),
-              ),
-              CupertinoButton(child: const Text('Reset password'), onPressed:(){
-                context.read<AuthBloc>().add(const AuthEventForgotPassword());
-              }), 
-              CupertinoButton(
-                  onPressed: () {
-                    context.read<AuthBloc>().add(const AuthEventShouldRegister());
+                TextField(
+                  controller: _password,
+                  obscureText: true,
+                  obscuringCharacter: '-',
+                  enableSuggestions: false,
+                  autocorrect: false,
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: const InputDecoration(
+                    hintText: 'enter your password',
+                  ),
+                ),
+                CupertinoButton(
+                  onPressed: () async {
+                    final email = _email.text;
+                    final password = _password.text;
+                    context.read<AuthBloc>().add(
+                          AuthEventLogIn(
+                            email,
+                            password,
+                          ),
+                        );
                   },
-                  child: const Text('Not registered yet?Register now')),              
-            ],
+                  child: const Text('Login'),
+                ),
+                CupertinoButton(child: const Text('Reset password'), onPressed:(){
+                  context.read<AuthBloc>().add(const AuthEventForgotPassword());
+                }), 
+                CupertinoButton(
+                    onPressed: () {
+                      context.read<AuthBloc>().add(const AuthEventShouldRegister());
+                    },
+                    child: const Text('Not registered yet?Register now')),   
+                    Container(
+                      child: Lottie.network(
+                        'https://assets3.lottiefiles.com/packages/lf20_p7ml1rhe.json', 
+                        reverse: true,                    
+                        )
+                    )                        
+              ],
+            ),
           ),
         ),
       ),
