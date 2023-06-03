@@ -18,15 +18,13 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> with TickerProviderStateMixin {
   late final TextEditingController _email;
   late final TextEditingController _password;
-  late final AnimationController _controller;
 
   
 
   @override
   void initState() {
     _email = TextEditingController();
-    _password = TextEditingController();
-    _controller = AnimationController(vsync: this,duration: const Duration(seconds: 5));    
+    _password = TextEditingController();   
     super.initState();
   }
 
@@ -34,7 +32,6 @@ class _LoginViewState extends State<LoginView> with TickerProviderStateMixin {
   void dispose() {
     _email.dispose();
     _password.dispose();
-    _controller.dispose();
     super.dispose();
   }
 
