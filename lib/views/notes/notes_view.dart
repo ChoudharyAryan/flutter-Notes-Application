@@ -8,7 +8,6 @@ import 'package:flutter_sem_2/utilities/dialogs/logout_dialog.dart';
 import 'package:flutter_sem_2/views/notes/notes_list_view.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:animated_background/animated_background.dart';
 import '../../constants/routes.dart';
 import '../../enums/menu_action.dart';
 
@@ -19,11 +18,10 @@ class NotesView extends StatefulWidget {
   State<NotesView> createState() => _NotesViewState();
 }
 
-class _NotesViewState extends State<NotesView> with SingleTickerProviderStateMixin {
+class _NotesViewState extends State<NotesView>
+    with SingleTickerProviderStateMixin {
   late final FirebaseCloudStorage _notesService;
   String get userId => AuthService.firebase().currentuser!.id;
-
-
 
   @override
   void initState() {
@@ -33,7 +31,7 @@ class _NotesViewState extends State<NotesView> with SingleTickerProviderStateMix
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(      
+    return Scaffold(
       appBar: AppBar(
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
@@ -73,44 +71,41 @@ class _NotesViewState extends State<NotesView> with SingleTickerProviderStateMix
           )
         ],
       ),
-      body: AnimatedBackground(
-        vsync: this,
-        behaviour: RacingLinesBehaviour(direction: LineDirection.Ttb),
-        child: StreamBuilder(
-          stream: _notesService.allNotes(ownerUserId: userId),
-          builder: (context, snapshot) {
-            switch (snapshot.connectionState) {
-              case ConnectionState.waiting:
-                return const Text('Loading Data');
-              case ConnectionState.active:
-                if (snapshot.hasData) {
-                  final allNotes = snapshot.data as Iterable<CloudNote>;
-                  return NotesListView(
-                    notes: allNotes,
-                    onDeleteNote: (note) async {
-                      await _notesService.deleteNote(documentId: note.documentId);
-                    },
-                    ontap: (note) {
-                      Navigator.of(context).pushNamed(
-                        createOrUpdateNoteRoute,
-                        arguments: note,
-                      );
-                    },
-                  );
-                } else {
-                  return const  SpinKitCircle(
-                        color: Colors.blue,
-                        size: 50.0,
-                      );
-                }
-              default:
-                return const  SpinKitCircle(
-                        color: Colors.blue,
-                        size: 50.0,
-                      );
-            }
-          },
-        ),
+      body: StreamBuilder(
+        stream: _notesService.allNotes(ownerUserId: userId),
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting:
+              return const Text('Loading Data');
+            case ConnectionState.active:
+              if (snapshot.hasData) {
+                final allNotes = snapshot.data as Iterable<CloudNote>;
+                return NotesListView(
+                  notes: allNotes,
+                  onDeleteNote: (note) async {
+                    await _notesService.deleteNote(
+                        documentId: note.documentId);
+                  },
+                  ontap: (note) {
+                    Navigator.of(context).pushNamed(
+                      createOrUpdateNoteRoute,
+                      arguments: note,
+                    );
+                  },
+                );
+              } else {
+                return const SpinKitCircle(
+                  color: Colors.blue,
+                  size: 50.0,
+                );
+              }
+            default:
+              return const SpinKitCircle(
+                color: Colors.blue,
+                size: 50.0,
+              );
+          }
+        },
       ),
     );
   }

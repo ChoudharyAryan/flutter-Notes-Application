@@ -18,6 +18,7 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> with TickerProviderStateMixin {
   late final TextEditingController _email;
   late final TextEditingController _password;
+  late final AnimationController _controller;
 
   
 
@@ -25,7 +26,7 @@ class _LoginViewState extends State<LoginView> with TickerProviderStateMixin {
   void initState() {
     _email = TextEditingController();
     _password = TextEditingController();
-    
+    _controller = AnimationController(vsync: this,duration: const Duration(seconds: 5));    
     super.initState();
   }
 
@@ -33,13 +34,14 @@ class _LoginViewState extends State<LoginView> with TickerProviderStateMixin {
   void dispose() {
     _email.dispose();
     _password.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
   
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {    
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) async {
         if (state is AuthStateLoggedOut) {          

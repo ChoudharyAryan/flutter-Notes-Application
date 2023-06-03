@@ -27,7 +27,7 @@ class NotesListView extends StatelessWidget {
             ontap(note);
           },
           title: Card(
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6),),
             elevation: 4,
             child: Padding(
               padding: const EdgeInsets.only(right: 15,left: 15,top: 23,bottom: 23),
@@ -40,6 +40,7 @@ class NotesListView extends StatelessWidget {
             ),
           ),
           trailing: Card(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6),),
             elevation: 2,
             child: IconButton(
               onPressed: () async {
